@@ -1,0 +1,13 @@
+{
+  "name": "terceraentregaproyectofinal",
+  "version": "1.0.0",
+  "description": "Tercera entrega del trabajo practico final del curso sobre Backend de Coderhouse",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start:dev": "nodemon src/app.js"
+  },
+  "keywords": [],
+  "author": "Marcelo Dutto",
+  "license": "ISC"
+}

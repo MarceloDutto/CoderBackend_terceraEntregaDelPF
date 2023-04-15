@@ -3,7 +3,8 @@ dotenv.config()
 
 const config = {
     app: {
-        port: process.env.PORT || 3000
+        port: process.env.PORT || 3000,
+        persistence: process.env.PERSISTENCE 
     },
     db: {
         userDB: process.env.USER_DB,

@@ -33,6 +33,10 @@ switch (persistence) {
         const cartPath = __dirname + '/files/carts.json';
         CartDAO = new CartFiles(cartPath);
 
+        const { default: UserFiles } = await import("./fileSystem/usersManager.fileSystem.js");
+        const usersPath = __dirname + '/files/users.json';
+        UserDAO = new UserFiles(usersPath);
+
         console.log('Persistence in File System');
         break;
 };

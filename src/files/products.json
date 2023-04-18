@@ -120,5 +120,17 @@
       "/img/estanteria-5.jpg"
     ],
     "stock": 3
+  },
+  {
+    "id": "d4e487c2-e699-4fee-bd6f-0ecd107a2234",
+    "name": "Escritorio moderno Viena",
+    "description": "Fabricado en aglomerado recubierto en melamina de excelente calidad. Interior de cajones en melanina blanca, con fondo de cajón en Fibroplus. Correderas metálicas de primera calidad. Pies plásticos en la base de archivero para evitar el contacto con el piso. Bisagra de codo de excelente calidad.",
+    "category": "Escritorios",
+    "code": "escr-23",
+    "price": 43499,
+    "thumbnail": [
+      "/img/undefined"
+    ],
+    "stock": 11
   }
 ]

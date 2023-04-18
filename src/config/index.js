@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
-dotenv.config()
+
+dotenv.config();
 
 const config = {
     app: {
@@ -11,8 +12,12 @@ const config = {
         passDB: process.env.PASS_DB,
         hostDB: process.env.HOST_DB
     },
-    session: {
-        sessionSecret: process.env.SESSION_SECRET
+    github: {
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET
+    },
+    jwt: {
+        jwt_secret: process.env.JWT_SECRET
     },
     admin: {
         admin_email: process.env.ADMIN_EMAIL,

@@ -1,9 +1,28 @@
 import { Router } from "express";
+import { registerUser } from "./service.users.js";
 
 const router = Router();
 
-router.get('/', (req, res) => {
-    res.json({message: 'Hola desde usuarios'});
+router.post('/', async (req, res) => {
+    const { first_name, last_name, age, email, password } = req.body;
+    if(!first_name || !last_name || !age || !email || !password) return res.status(400).json({status: 'failed', message: 'Error en el ingreso de los datos'});
+    
+    const newUserInfo = {
+        first_name,
+        last_name,
+        age,
+        email,
+        password
+    };
+    try {
+        const response = await registerUser(newUserInfo);
+        if(response.status === 'failed') return res.status(400).json({status: response.status, message: response.message, payload: {}});
+        res.status(201).json({status: 'success', message: response.message, payload: response.payload});
+    } catch(error) {
+        console.log(error);
+        if(error.code === 11000) return res.status(400).json({status: 'error', error: 'Ya existe un usuario con ese correo electrónico'});
+        return res.status(500).json({status: 'error', error: error.message });
+    }
 });
 
 export default router;

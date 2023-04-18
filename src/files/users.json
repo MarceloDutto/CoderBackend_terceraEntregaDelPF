@@ -1,0 +1,29 @@
+[
+  {
+    "id": "0edb3f07-6d80-4cb6-8197-f9a11d0c4245",
+    "first_name": "fran",
+    "last_name": "dutto",
+    "age": "42",
+    "email": "fran@dutto.com",
+    "password": "$2b$10$K47OSVp5NOdb5l1n7wIlDu/f8hw.b64b2EoS8v7yHu8SRzjRVDo1O",
+    "cart": ""
+  },
+  {
+    "id": "6d22400d-9f0b-4a89-ada7-e0956f53a0f1",
+    "first_name": "fran",
+    "last_name": "dutto",
+    "age": "42",
+    "email": "fran1@dutto.com",
+    "password": "$2b$10$9u.rgnWRA82ED4wGHiSYsODe3i8GFEFdcb94yR1VA6rilSIgPRK1i",
+    "cart": ""
+  },
+  {
+    "id": "162faa74-80d1-400e-b6bf-0faec24e60e8",
+    "first_name": "juan",
+    "last_name": "dutto",
+    "age": "10",
+    "email": "juan@dutto.com",
+    "password": "$2b$10$krY8bEZ.lQwrZ03voAgmcuuGBbKE5bOSCFD6b7n6iO/nm8q8My6rK",
+    "cart": ""
+  }
+]

@@ -37,9 +37,9 @@ class CartManager {
             return {};
         }
 
+        try {
         await this.getCarts();
 
-        try {
             const cartById = this.carts.find(cart => cart.id === cidRef);
             return cartById ? cartById : {};
         } catch (error) {
@@ -49,29 +49,34 @@ class CartManager {
     };
 
     addCart = async () => {
-        existsSync(this.path) ? await this.getCarts() : this.carts = [];
-
-        let id;
-        let uniqueId = false;
-        while (uniqueId === false) {
-            id = uuidv4();
-            uniqueId = this.carts.forEach(cart => cart.id === id) ? false : true;
-        };
-
-        const newCart = {
-            id,
-            products: []
-        };
-
-        this.carts.push(newCart);
-
-        const cartStr = JSON.stringify(this.carts, null, 2);
-        writeFile(this.path, cartStr, error => {
-            if(error) {
-                throw error;
-            }
-        });
-        return newCart;
+        try {
+            existsSync(this.path) ? await this.getCarts() : this.carts = [];
+    
+            let id;
+            let uniqueId = false;
+            while (uniqueId === false) {
+                id = uuidv4();
+                uniqueId = this.carts.forEach(cart => cart.id === id) ? false : true;
+            };
+    
+            const newCart = {
+                id,
+                products: []
+            };
+    
+            this.carts.push(newCart);
+    
+            const cartStr = JSON.stringify(this.carts, null, 2);
+            writeFile(this.path, cartStr, error => {
+                if(error) {
+                    throw error;
+                }
+            });
+            return newCart;
+        } catch(error) {
+            console.log(error);
+            throw error;
+        }
     };
 
     getProductIndex = async (pid, cart) => {

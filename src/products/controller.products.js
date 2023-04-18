@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getProducts, getProductById, addProduct, updateProduct, deleteProduct, deleteAllProducts } from "./service.products.js";
-import { uploader } from "../utils/multer.js";
+import { uploader } from "../utils/multer.utils.js";
 
 const router = Router();
 
@@ -36,7 +36,7 @@ router.post('/', uploader.single('file') , async (req, res) => {
     if(!name || !description || !category || !code || !price || !stock) return res.status(400).json({status: 'failed', error: 'Debe ingresar los campos obligatorios'});
 
     const imgPath = req.file?.filename;
-    const relativePath = `/img/${imgPath}`;
+    const relativePath = `/img/products/${imgPath}`;
     thumbnail.push(relativePath);
 
     const productInfo = {

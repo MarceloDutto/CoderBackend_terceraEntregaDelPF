@@ -48,8 +48,8 @@ body {
 .actions {
     display: flex;
     justify-content: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 60px;
     padding: 3px;
 }
 

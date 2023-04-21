@@ -14,7 +14,7 @@ class CartManager {
 
     getCartById = async (idRef) => {
         try {
-            const data = await Cart.findOne({"_id": idRef});
+            const data = await Cart.findOne({_id: idRef});
             return data? data : {};
         } catch (error) {
             console.log(error);

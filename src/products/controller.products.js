@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getProducts, getProductById, addProduct, updateProduct, deleteProduct, deleteAllProducts } from "./service.products.js";
 import { uploader } from "../utils/multer.utils.js";
+import handlePolicies from "../middlewares/handlePolicies.js";
 
 const router = Router();
 
@@ -31,7 +32,7 @@ router.get('/:pid', async (req, res) => {
     }
 });
 
-router.post('/', uploader.single('file') , async (req, res) => {
+router.post('/', uploader.single('file'), handlePolicies('ADMIN'), async (req, res) => {
     const { name, description, category, code, price, thumbnail=[], stock } = req.body;
     if(!name || !description || !category || !code || !price || !stock) return res.status(400).json({status: 'failed', error: 'Debe ingresar los campos obligatorios'});
 
@@ -58,7 +59,7 @@ router.post('/', uploader.single('file') , async (req, res) => {
     }
 });
 
-router.patch('/:pid', async (req, res) => {
+router.patch('/:pid', handlePolicies('ADMIN'), async (req, res) => {
     const { pid } = req.params;
     const { name, description, category, code, price, thumbnail, stock } = req.body;
 
@@ -81,7 +82,7 @@ router.patch('/:pid', async (req, res) => {
     }
 });
 
-router.delete('/:pid', async (req, res) => {
+router.delete('/:pid', handlePolicies('ADMIN'), async (req, res) => {
     const { pid } = req.params;
 
     try {
@@ -93,7 +94,7 @@ router.delete('/:pid', async (req, res) => {
     }
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/', handlePolicies('ADMIN'), async (req, res) => {
     try {
         const response = await deleteAllProducts();
         res.json({message: response});

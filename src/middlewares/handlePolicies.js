@@ -13,7 +13,7 @@ const handlePolicies = (policies) => {
             if(!user) {
                 return res.status(401).json({status: 'error', message: 'Debes ser un usuario registrado para ver esta página'});
             }
-        
+            
             if(!policies.includes(user.user.role.toUpperCase())) {
                 return res.status(403).json({status: 'error', message: 'No tiene autorización para ver esta página'});
             }

@@ -11,6 +11,7 @@ export const userAuthentication = async (email, password) => {
         const data = {
             first_name: user.first_name,
             last_name: user.last_name,
+            fullname: user.first_name + " " + user.last_name,
             email,
             cart: user.cart,
             role: user.role

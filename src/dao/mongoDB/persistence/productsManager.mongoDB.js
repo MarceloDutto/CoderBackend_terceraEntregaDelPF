@@ -1,14 +1,16 @@
 import Product from "../models/product.models.js";
+import productsDTO from "../../../DTOs/products.DTO.js";
 
 class ProductManager {
 
     getProducts = async (filter, options) => {
         try {
             const data = await Product.paginate(filter, options);
+            const mappedData = data.docs.map(doc => new productsDTO(doc));
 
             const response = {
                 status: "success",
-                payload: data.docs,
+                payload: mappedData,
                 totalPages: data.totalPages,
                 prevPage: data.prevPage,
                 nextPage: data.nextPage,
@@ -28,7 +30,8 @@ class ProductManager {
     getProductById = async (idRef) => {
         try {
             const data = await Product.findById(idRef);
-            return data? data : {}
+            if(!data) return {}
+            return new productsDTO(data);
         } catch (error) {
             console.log(error);
             throw error;
@@ -38,7 +41,8 @@ class ProductManager {
     getProductByCode = async (codeRef) => {
         try {
             const data = await Product.find({code: codeRef});
-            return data? data : {};
+            if(!data) return {};
+            return new productsDTO(data);
         } catch (error) {
             console.log(error);
             throw error;

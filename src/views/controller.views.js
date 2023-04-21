@@ -53,7 +53,7 @@ router.get('/products', handlePolicies(['USER', 'ADMIN']), async (req, res) => {
             style: 'products.css',
             user,
             showProducts,
-            products: products.map(prod => prod.toJSON()),
+            products,
             prevPageLink: data.payload.hasPrevPage? data.payload.prevLink : "",
             nextPageLink: data.payload.hasNextPage? data.payload.nextLink : ""
         });
@@ -71,21 +71,24 @@ router.get('/products/details/:pid', handlePolicies(['USER', 'ADMIN']), async (r
     const { pid } = req.params;
     let showProduct = false;
     let product = {}
+    const user = req.user.user;
 
     try {
         product = await getProductById(pid);
-        product.payload === {} ? showProduct = false : showProduct = true
-        const { thumbnail, name, description, category, price, stock } = product.payload;
+        product.payload === {} ? showProduct = false : showProduct = true;
+        const { thumbnail, name, description, category, price, stock, id } = product.payload;
 
         res.render('details', {
             title: 'Detalles del producto',
             showProduct,
+            id,
             thumbnail,
             name,
             description,
             category,
             price,
             stock,
+            user,
             style: 'details.css'
         })
 
@@ -105,7 +108,6 @@ router.get('/cart/:cid', handlePolicies(['USER', 'ADMIN']), async (req, res) => 
     try {
         const cart = await getCartById(cid);
         const products = cart.payload.products
-        console.log(products)
         products.length > 0 ? showProducts = true : showProducts = false;
 
         res.render('cart', {
@@ -122,6 +124,16 @@ router.get('/cart/:cid', handlePolicies(['USER', 'ADMIN']), async (req, res) => 
         });
     }
 
+});
+
+router.get('/chat', handlePolicies('USER'), (req, res) => {
+    const user = req.user.user;
+
+    res.render('chat', {
+        title: 'Chat',
+        style: 'chat.css',
+        user
+    });
 });
 
 export default router;

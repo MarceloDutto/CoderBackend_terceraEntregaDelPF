@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({
+});
 
 const config = {
     app: {
@@ -23,6 +24,6 @@ const config = {
         admin_email: process.env.ADMIN_EMAIL,
         admin_password: process.env.ADMIN_PASSWORD
     }
-}
+};
 
 export default config;

@@ -2,6 +2,7 @@
     <div class="navButton-container">
         <a href="/profile" ><button class="navButton">Ver mi perfil</button></a> 
         <a href="" class="goToCartButton" id="{{user.cart}}"><button class="navButton">Ir al carrito</button></a> 
+        <a href="/chat" ><button class="navButton">Ir al chat</button></a> 
     </div>
     <h1 class="title">¡Bienvenid@, {{user.first_name}}! Estos son los productos que tenemos disponibles.</h1>
 
@@ -17,8 +18,8 @@
                         <p class="product-features">Precio: {{this.price}}</p>
                     </div>
                     <div class="actions">
-                        <a href="/products/details/{{this._id}}"><button class="action">Ver detalles</button></a> 
-                        <button class="cartButton" id="{{this._id}}">Agregar al carrito</button>
+                        <a href="/products/details/{{this.id}}"><button class="action">Ver detalles</button></a> 
+                        <button class="cartButton" id="{{this.id}}">Agregar al carrito</button>
                     </div>
                 </div>
             {{/each}}

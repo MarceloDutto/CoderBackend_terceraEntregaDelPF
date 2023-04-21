@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { getCarts, getCartById, addCart, addProductToCart, updateProductsfromCart, updateQuantity, deleteProductfromCart, deleteProductsfromCart } from "./service.carts.js";
+import { getCarts, getCartById, addCart, addProductToCart, updateProductsfromCart, updateQuantity, deleteProductfromCart, deleteProductsfromCart, purchase } from "./service.carts.js";
+import handlePolicies from "../middlewares/handlePolicies.js";
 
 const router = Router();
 
@@ -25,6 +26,19 @@ router.get('/:cid', async (req, res) => {
     }
 });
 
+router.get('/:cid/purchase', handlePolicies('USER'), async (req, res) => {
+    const { cid } = req.params;
+    const user = req.user.user;
+
+    try {
+        const response = await purchase(cid, user);
+        res.json({status: response.status? response.status :'success', message: response.message, payload: response.payload? response.payload : {}});
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({status: 'error', error: error.message});
+    }
+});
+
 router.post('/', async (req, res) => {
     try {
         const response = await addCart();
@@ -35,7 +49,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.post('/:cid/product/:pid', async (req, res) => {
+router.post('/:cid/product/:pid', handlePolicies('USER'), async (req, res) => {
     const { cid, pid } = req.params;
 
     try {

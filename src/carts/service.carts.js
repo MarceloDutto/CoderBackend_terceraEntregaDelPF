@@ -1,3 +1,4 @@
+import { createTicket } from "../tickets/service.tickets.js";
 import { CartDAO, ProductDAO } from "../dao/factory.js";
 const cm = CartDAO;
 const pm = ProductDAO;
@@ -64,7 +65,7 @@ export const updateProductsfromCart = async (cidRef, products) => {
         let updateIsValid = true;
 
         products.forEach(async prod => {
-            let id = prod.product._id;
+            let id = prod.product.id;
 
             try {
                 const response = pm.getProductById(id);
@@ -78,7 +79,7 @@ export const updateProductsfromCart = async (cidRef, products) => {
         if(updateIsValid) {
             cart.products = products;
             await cm.updateCart(cidRef, cart);
-            return {message: 'Productos actualizados'};
+            return {message: 'Productos del carrito actualizados'};
         } else {
             return {status: 'failed', message: 'Error al ingresar los productos'};
         }
@@ -133,6 +134,64 @@ export const deleteProductsfromCart = async (cidRef) => {
         cart.products = [];
         await cm.updateCart(cidRef, cart);
         return {status: 'success', message: 'Productos eliminados del carrito'};
+    } catch(error) {
+        throw error;
+    }
+};
+
+export const purchase = async (cidRef, user) => {
+    try {
+        const cart = await cm.getCartById(cidRef);
+        if(Object.keys(cart).length === 0 ) return {status: 'failed', message: 'No se encontró el carrito'};
+        const products = cart.products;
+        if(products.length === 0) return {status: 'failed', message: 'El carrito no tiene productos'};
+
+        let purchasedProducts = [];
+        let rejectedProducts = [];
+
+        for (const prod of products) {
+            let id = prod.product.id
+            let price = prod.product.price;
+            let quantity = prod.quantity;
+
+            let product = await pm.getProductById(id);
+          
+            if (quantity <= product.stock) {
+              try {
+                await pm.updateProduct(id, {stock: product.stock - quantity});
+                const subtotal = price * quantity;
+                const item = {
+                    product: product.id,
+                    subtotal
+                };
+                purchasedProducts.push(item);
+                const prodIndex = await cm.getProductIndex(id, cart);
+                cart.products.splice(prodIndex, 1);
+            } catch (error) {
+                console.log(error);
+                throw error;
+            }
+        } else {
+            rejectedProducts.push(product.id);
+        };
+    }; 
+    
+    await cm.updateCart(cidRef, cart);
+    if(purchasedProducts.length === 0) return {status: 'failed', message: 'La compra no pudo realizarse. Revise el stock antes de comprar.', payload: rejectedProducts};
+
+    const amount = purchasedProducts.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.subtotal;
+    }, 0);
+
+    const ticketInfo = {
+         amount,
+        purchaser: user.fullname
+    };
+
+    const purchaseTicket = await createTicket(ticketInfo);
+    if(rejectedProducts.length > 0) return {message: 'Algunos productos de tu carrito no tienen stock. La compra fue realizada exitosamente con los productos disponibles', payload: purchaseTicket};
+
+    return {message: 'Compra realizada exitosamente', payload: purchaseTicket};
     } catch(error) {
         throw error;
     }

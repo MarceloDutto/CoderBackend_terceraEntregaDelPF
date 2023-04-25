@@ -7,6 +7,7 @@ const { persistence } = config.app;
 export let ProductDAO;
 export let CartDAO;
 export let UserDAO;
+export let TicketDAO
 
 switch (persistence) {
     case 'MONGO':
@@ -20,6 +21,9 @@ switch (persistence) {
 
         const { default: UserMongo } = await import("./mongoDB/persistence/usersManager.mongoDB.js");
         UserDAO = new UserMongo();
+
+        const { default: TicketMongo } = await import('./mongoDB/persistence/ticketsManager.mongoDB.js');
+        TicketDAO = new TicketMongo();
 
         console.log('Persistence in MongoDB');
         break;
@@ -36,6 +40,10 @@ switch (persistence) {
         const { default: UserFiles } = await import("./fileSystem/usersManager.fileSystem.js");
         const usersPath = __dirname + '/files/users.json';
         UserDAO = new UserFiles(usersPath);
+
+        const { default: TicketFiles } = await import("./fileSystem/ticketsManager.fileSystem.js");
+        const ticketsPath = __dirname + '/files/tickets.json';
+        TicketDAO = new TicketFiles(ticketsPath);
 
         console.log('Persistence in File System');
         break;

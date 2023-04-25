@@ -11,6 +11,7 @@
   "author": "Marcelo Dutto",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^7.6.0",
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",

@@ -7,6 +7,7 @@ import __dirname from './utils.js';
 import config from './config/index.js';
 import initializePassport from './config/passport.js';
 import router from './router/index.js';
+import errorHandler from './middlewares/errors/index.js';
 
 const app = express();
 const port = config.app.port;
@@ -25,5 +26,6 @@ initializePassport();
 app.use(passport.initialize());
 
 router(app);
+app.use(errorHandler);
 
 export { app, port };

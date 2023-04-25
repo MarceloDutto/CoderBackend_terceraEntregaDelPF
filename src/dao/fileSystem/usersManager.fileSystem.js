@@ -31,6 +31,7 @@ class UserManager {
 
     registerUser = async (newUserInfo) => {
         try  {
+            console.log('manager')
             await this.getUsers();
             
             let id;
@@ -44,7 +45,7 @@ class UserManager {
                 id,
                 ...newUserInfo
             };
-
+            
             this.users.push(newUser);
             const userStr = JSON.stringify(this.users, null, 2);
             writeFile(this.path, userStr, error => {

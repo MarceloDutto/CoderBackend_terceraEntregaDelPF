@@ -50,8 +50,7 @@ class CartManager {
 
     addCart = async () => {
         try {
-            existsSync(this.path) ? await this.getCarts() : this.carts = [];
-    
+            await this.getCarts();
             let id;
             let uniqueId = false;
             while (uniqueId === false) {
@@ -65,7 +64,6 @@ class CartManager {
             };
     
             this.carts.push(newCart);
-    
             const cartStr = JSON.stringify(this.carts, null, 2);
             writeFile(this.path, cartStr, error => {
                 if(error) {

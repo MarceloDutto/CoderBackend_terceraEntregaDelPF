@@ -2,6 +2,7 @@ import { createTicket } from "../tickets/service.tickets.js";
 import { CartDAO, ProductDAO } from "../dao/factory.js";
 const cm = CartDAO;
 const pm = ProductDAO;
+ 
 
 
 export const getCarts = async () => {

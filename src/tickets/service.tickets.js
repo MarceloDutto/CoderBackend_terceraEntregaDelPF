@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import TicketManager from "../dao/mongoDB/persistence/ticketsManager.mongoDB.js";
-const tm = new TicketManager();
+import { TicketDAO } from "../dao/factory.js";
+const tm = TicketDAO;
 
 export const getTickets = async () => {
     try {

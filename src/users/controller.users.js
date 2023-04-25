@@ -1,11 +1,21 @@
 import { Router } from "express";
 import { registerUser } from "./service.users.js";
+import CustomError from "../errors/CustomError.js";
+import EErrors from "../errors/enum.errors.js";
+import generateUserErrorInfo from "../errors/info.errors.js";
 
 const router = Router();
 
 router.post('/', async (req, res) => {
     const { first_name, last_name, age, email, password } = req.body;
-    if(!first_name || !last_name || !age || !email || !password) return res.status(400).json({status: 'failed', message: 'Error en el ingreso de los datos'});
+    if(!first_name || !last_name || !age || !email || !password) {
+        CustomError.createError({
+            name: 'User creation error',
+            cause: generateUserErrorInfo({first_name, last_name, age, email}),
+            message: 'Error trying to create user',
+            code: EErrors.INVALID_TYPES_ERROR,
+        });
+    };
     
     const newUserInfo = {
         first_name,

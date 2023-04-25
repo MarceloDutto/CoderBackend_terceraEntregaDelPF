@@ -5,8 +5,8 @@ import clientUserDTO from "../DTOs/clientUser.DTO.js";
 
 const um = UserDAO;
 
-export const registerUser = async (newUserData) => {
-    const { first_name, last_name, age, email, password } = newUserData;
+export const registerUser = async (newUserInfo) => {
+    const { first_name, last_name, age, email, password } = newUserInfo;
 
     try {
         const user = await findUserByEmail(email);
@@ -15,7 +15,7 @@ export const registerUser = async (newUserData) => {
         
         const newUserCart = await addCart();
 
-        const newUserInfo = {
+        const newUserData = {
             first_name,
             last_name,
             age,
@@ -23,8 +23,8 @@ export const registerUser = async (newUserData) => {
             password: createHash(password),
             cart: newUserCart.payload._id
         };
-
-        const response = await um.registerUser(newUserInfo);
+                
+        const response = await um.registerUser(newUserData);
         const newUser = new clientUserDTO(response);
         
         return {status: 'success', message: 'Usuario registrado exitosamente', payload: newUser};

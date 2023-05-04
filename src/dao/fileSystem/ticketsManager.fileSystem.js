@@ -24,7 +24,7 @@ class TicketManager {
             return this.tickets;
 
         } catch (error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -35,7 +35,7 @@ class TicketManager {
             const ticketById = this.tickets.find(ticket => ticket.id === tidRef);
             return ticketById? ticketById : {};
         } catch (error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -66,7 +66,7 @@ class TicketManager {
 
             return newTicket
         } catch (error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     }

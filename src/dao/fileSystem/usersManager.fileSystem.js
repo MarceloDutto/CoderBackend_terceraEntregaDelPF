@@ -24,14 +24,13 @@ class UserManager {
             this.users = JSON.parse(data); 
             return this.users;
         } catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
 
     registerUser = async (newUserInfo) => {
         try  {
-            console.log('manager')
             await this.getUsers();
             
             let id;
@@ -55,7 +54,7 @@ class UserManager {
             })
             return newUser;
         } catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -67,7 +66,7 @@ class UserManager {
             const user = this.users.find(user => user.email === emailRef);
             return user? user : {};
         }catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -79,7 +78,7 @@ class UserManager {
             const user = this.users.find(user => user.id === idRef);
             return user? user : {};
         } catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     }

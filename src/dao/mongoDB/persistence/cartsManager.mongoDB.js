@@ -7,7 +7,7 @@ class CartManager {
             const data = await Cart.find();
             return data
         } catch (error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -17,7 +17,7 @@ class CartManager {
             const data = await Cart.findOne({_id: idRef});
             return data? data : {};
         } catch (error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -27,7 +27,7 @@ class CartManager {
             const newCart = await Cart.create({products: []});
             return newCart;
         } catch (error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -37,7 +37,7 @@ class CartManager {
             const index = await cart.products.findIndex(prod => prod.product.equals(pid));
             return index;
         } catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -46,7 +46,7 @@ class CartManager {
         try {
             await Cart.updateOne({_id: cidRef}, update);
         } catch (error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };

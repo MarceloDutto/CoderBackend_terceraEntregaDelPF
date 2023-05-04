@@ -6,7 +6,8 @@ dotenv.config({
 const config = {
     app: {
         port: process.env.PORT || 3000,
-        persistence: process.env.PERSISTENCE 
+        persistence: process.env.PERSISTENCE,
+        environment: process.env.NODE_ENV || 'production'
     },
     db: {
         userDB: process.env.USER_DB,

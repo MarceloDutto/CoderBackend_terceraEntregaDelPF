@@ -72,7 +72,6 @@ export const updateProductsfromCart = async (cidRef, products) => {
                 const response = pm.getProductById(id);
                 if(Object.keys(response).length !== 0) updateIsValid = false;
             } catch (error) {
-                console.log(error);
                 throw error;
             }
         });

@@ -7,7 +7,7 @@ class TicketManager {
             const tickets = await Ticket.find();
             return tickets;
         } catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -17,7 +17,7 @@ class TicketManager {
             const ticket = await Ticket.findById(tidRef);
             return ticket? ticket : {};
         } catch(error) {
-            console,log(error);
+            req.logger.error(error);
             throw error;
         }
     }
@@ -27,7 +27,7 @@ class TicketManager {
             const newTicket = await Ticket.create(ticketInfo);
             return newTicket;
         } catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };

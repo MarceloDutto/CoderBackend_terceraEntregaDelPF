@@ -26,7 +26,7 @@ class CartManager {
             this.carts = JSON.parse(data);
             return this.carts;
         } catch (error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -43,7 +43,7 @@ class CartManager {
             const cartById = this.carts.find(cart => cart.id === cidRef);
             return cartById ? cartById : {};
         } catch (error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -72,7 +72,7 @@ class CartManager {
             });
             return newCart;
         } catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -82,7 +82,7 @@ class CartManager {
             const index = await cart.products.findIndex(prod => prod.product === pid);
             return index;
         } catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };

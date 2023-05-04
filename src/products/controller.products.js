@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
         const response = await getProducts(limit, page, query, sort);
         res.json({status: response.status? response.status : 'success', message: response.message, payload: response.payload? response.payload : {}});
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({status: 'error', error: error.message});
     }
 });
@@ -27,14 +27,14 @@ router.get('/:pid', async (req, res) => {
         const response = await getProductById(pid)
         res.json({status: response.status? response.status : 'success', message: response.message, payload: response.payload});
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({status: 'error', error: error.message});
     }
 });
 
 router.post('/', uploader.single('file'), handlePolicies('ADMIN'), async (req, res) => {
     const { name, description, category, code, price, thumbnail=[], stock } = req.body;
-    if(!name || !description || !category || !code || !price || !stock) return res.status(400).json({status: 'failed', error: 'Debe ingresar los campos obligatorios'});
+    if(!name || !description || !category || !code || !price || !stock) return res.status(400).json({status: 'error', message: 'Debes completar los campos requeridos'});
 
     const imgPath = req.file?.filename;
     const relativePath = `/img/products/${imgPath}`;
@@ -54,7 +54,7 @@ router.post('/', uploader.single('file'), handlePolicies('ADMIN'), async (req, r
         const response = await addProduct(productInfo);
         res.status(201).json({status: response.status? response.status : 'success', message: response.message, payload: response.payload? response.payload : {}});
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({status: 'error', error: error.message});
     }
 });
@@ -77,7 +77,7 @@ router.patch('/:pid', handlePolicies('ADMIN'), async (req, res) => {
         const response = await updateProduct(pid, updates);
         res.json({status: response.status? response.status : 'success', message: response.message, payload: response.payload? response.payload : {}});
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({status: 'error', error: error.message});
     }
 });
@@ -89,7 +89,7 @@ router.delete('/:pid', handlePolicies('ADMIN'), async (req, res) => {
         const response = await deleteProduct(pid);
         res.json({message: response});
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({message: 'Error al eliminar el producto'});
     }
 });

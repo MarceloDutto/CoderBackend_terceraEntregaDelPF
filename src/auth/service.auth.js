@@ -20,7 +20,7 @@ export const userAuthentication = async (email, password) => {
         let token = generateToken(data);
         return {status: 'success', message: 'Usuario autenticado', payload: token};
     } catch(error) {
-        console.log(error)
+        req.logger.error(error);
         throw error;
     }
 };

@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
         const response = await getCarts();
         res.json({status: 'success', message: response.message, payload: response.payload? response.payload : []});
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({status: 'error', error: error.message});
     }
 });
@@ -21,7 +21,7 @@ router.get('/:cid', async (req, res) => {
         const response = await getCartById(cid);
         res.json({status: 'success', message: response.message, payload: response.payload? response.payload : {}});
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({status: 'error', error: error.message});
     }
 });
@@ -34,7 +34,7 @@ router.get('/:cid/purchase', handlePolicies('USER'), async (req, res) => {
         const response = await purchase(cid, user);
         res.json({status: response.status? response.status :'success', message: response.message, payload: response.payload? response.payload : {}});
     } catch(error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({status: 'error', error: error.message});
     }
 });
@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
         const response = await addCart();
         res.status(201).json({status: 'success', message: response.message, payload: response.payload});
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({status: 'error', error: error.message});
     }
 });
@@ -56,7 +56,7 @@ router.post('/:cid/product/:pid', handlePolicies('USER'), async (req, res) => {
         const response = await addProductToCart(cid, pid);
         res.json({status: response.status? response.status : 'success', message: response.message});
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({message: 'Error al agregar el producto al carrito', error: error.message});
     }
 });
@@ -69,7 +69,7 @@ router.put('/:cid', async (req, res) => {
         const response = await updateProductsfromCart(cid, products);
         res.json({message: response});
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({message: 'Error al actualizar los productos', error: error.message});
     }
 });
@@ -82,7 +82,7 @@ router.put('/:cid/product/:pid', async (req, res) => {
         const response = await updateQuantity(cid, pid, quantity);
         res.json({message: response});
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({message: 'Error al actualizar el producto', error: error.message});
     }
 });
@@ -94,7 +94,7 @@ router.delete('/:cid/product/:pid', async (req, res) => {
         const response = await deleteProductfromCart(cid, pid);
         res.json({message: response});
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({message: 'Error al eliminar el producto del carrito', error: error.message});
     }
 });
@@ -106,7 +106,7 @@ router.delete('/:cid', async (req, res) => {
         const response = await deleteProductsfromCart(cid);
         res.json({message: response});
     } catch(error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).json({message: 'Error al eliminar los productos del carrito', error: error.message});
     }
 });

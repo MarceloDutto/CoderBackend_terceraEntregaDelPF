@@ -7,7 +7,7 @@ class UserManager {
             const newUser = await User.create(newUserInfo);
             return newUser;
         } catch (error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -17,7 +17,7 @@ class UserManager {
             const user = await User.findOne({email: emailRef});
             return user? user : {}
         } catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
@@ -27,7 +27,7 @@ class UserManager {
             const user = await User.findById(idRef);
             return user? user : {};
         } catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     }

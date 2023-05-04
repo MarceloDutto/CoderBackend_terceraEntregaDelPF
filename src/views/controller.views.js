@@ -58,7 +58,7 @@ router.get('/products', handlePolicies(['USER', 'ADMIN']), async (req, res) => {
             nextPageLink: data.payload.hasNextPage? data.payload.nextLink : ""
         });
     } catch(error) {
-        console.log(error);
+        req.logger.error(error);
         res.render('products', {
             title: 'Productos',
             style: 'products.css',
@@ -93,7 +93,7 @@ router.get('/products/details/:pid', handlePolicies(['USER', 'ADMIN']), async (r
         })
 
     } catch (error) {
-        console.log(error);
+        req.logger.error(error);
         res.status(500).render('details.handlebars', {
             showProduct,
             style: 'details.css'
@@ -117,7 +117,7 @@ router.get('/cart/:cid', handlePolicies(['USER', 'ADMIN']), async (req, res) => 
             products: products.map(prod => prod.toJSON())
         });
     } catch(error) {
-        console.log(error);
+        req.logger.error(error);
         res.render('cart', {
             showProducts,
             style: 'cart.css'

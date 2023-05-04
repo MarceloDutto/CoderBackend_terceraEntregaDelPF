@@ -49,7 +49,7 @@ class ProductManager {
         }; 
         return response;
         } catch(error) {
-          console.log(error);
+          req.logger.error(error);
           throw error;
         }
       };
@@ -73,7 +73,7 @@ class ProductManager {
             const prodById = this.products.find(prod => prod.id === idRef);
             return prodById ? prodById : {};
         } catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
       
@@ -98,7 +98,7 @@ class ProductManager {
             const prodByCode = this.products.find(prod => prod.code === codeRef);
             return prodByCode ? prodByCode : {};
         } catch(error) {
-            console.log(error);
+            req.logger.error(error);
             throw error;
         }
     };
